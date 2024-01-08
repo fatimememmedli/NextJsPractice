@@ -1,8 +1,15 @@
 import main from "./config";
-main();
+import { NextResponse } from "next/server";
+import User from "./../users/model"
+export async function GET(res, req) {
+try {
+  await main()
+  const users = await User.find()
+  // console.log(users)
+  return new NextResponse(JSON.stringify(users), {status:200})
 
-export function GET(res, req) {
-  //   const data = products;
-
-  return Response.json({ name: "fatime" });
+}
+catch(err){
+return new NextResponse("Error in fetching posts" + err,{status:500})
+}
 }
